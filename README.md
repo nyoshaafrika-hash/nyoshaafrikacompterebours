@@ -1,2 +1,2 @@
 # nyoshaafrikacompterebours
-compte q rebours de l'hackathon nyosha afrika
+compte a rebours de l'hackathon nyosha afrika
