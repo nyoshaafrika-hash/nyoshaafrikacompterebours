@@ -2,42 +2,161 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NYOSHA AFRIKA REBOURS </title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <title>NYOSHA AFRIKA COMPTE REBOURS</title>
+    <style>
+        /* Reset complet et sécurité pour iOS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background: #0f172a; /* Fond sombre uni et ultra-léger pour les performances */
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px; /* Moins d'espace perdu sur les bords */
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 100%;
+            padding: 0 5px;
+        }
+
+        h1 {
+            font-size: 1.8rem; /* Taille réduite pour ne pas sauter de ligne sur iPhone 6s */
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #38bdf8;
+        }
+
+        p.subtitle {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+
+        /* Grille adaptative optimisée pour les écrans de 375px */
+        .countdown-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between; /* Aligne parfaitement à gauche et à droite */
+            gap: 10px;
+            width: 100%;
+        }
+
+        /* Chaque box fait exactement 48% de la largeur pour tenir à deux par ligne sur iPhone 6s */
+        .countdown-box {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            width: 48%; 
+            flex-grow: 1;
+            padding: 15px 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        /* Taille calibrée pour l'écran de l'iPhone 6s */
+        .number {
+            font-size: 2.2rem; 
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.1;
+            margin-bottom: 4px;
+        }
+
+        .label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #38bdf8;
+            font-weight: 600;
+        }
+
+        #message {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #34d399;
+            margin-top: 20px;
+            display: none;
+        }
+
+        /* --- Ajustement si l'écran est plus grand (PC / Tablettes) --- */
+        @media (min-width: 600px) {
+            .container { max-width: 550px; }
+            h1 { font-size: 2rem; }
+            p.subtitle { font-size: 1.1rem; margin-bottom: 35px; }
+            .countdown-box { width: 22%; padding: 20px 10px; }
+            .number { font-size: 2.8rem; }
+            .label { font-size: 0.8rem; }
+        }
+    </style>
 </head>
 <body>
 
-    <div class="countdown-container">
-        <h1> NYOSHA AFRIKA HACKATHON </h1>
+    <div class="container">
+        <h1> NYOSHA AFRIKA HACKATHON</h1>
+        <p class="subtitle">Le compte à rebours est lancé. Soyez prêts pour le 10 juillet !</p>
 
- <h2> inscrivez-vous au lien : <a href="https://nyoshaafrika-hash.github.io/nyoshaafricahackaton/"> nyosha afrika </a> </h2>
-
-<h2> le lancement c'est dans :  </h2>
-
-        
-        <div class="countdown">
-            <div class="box">
-                <span id="days">00</span>
-                <small>Jours</small>
+        <div class="countdown-container" id="countdown">
+            <div class="countdown-box">
+                <div class="number" id="days">00</div>
+                <div class="label">Jours</div>
             </div>
-            <div class="box">
-                <span id="hours">00</span>
-                <small>Heures</small>
+            <div class="countdown-box">
+                <div class="number" id="hours">00</div>
+                <div class="label">Heures</div>
             </div>
-            <div class="box">
-                <span id="minutes">00</span>
-                <small>Minutes</small>
+            <div class="countdown-box">
+                <div class="number" id="minutes">00</div>
+                <div class="label">Minutes</div>
             </div>
-            <div class="box">
-                <span id="seconds">00</span>
-                <small>Secondes</small>
+            <div class="countdown-box">
+                <div class="number" id="seconds">00</div>
+                <div class="label">Secondes</div>
             </div>
         </div>
+
+        <div id="message">C'est parti ! 🚀</div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Cible : 10 Juillet 2026
+        const cibleDate = new Date("July 10, 2026 12:00:00").getTime();
 
-<h2>  </h2>
+        const x = setInterval(function() {
+            const maintenant = new Date().getTime();
+            const distance = cibleDate - maintenant;
+
+            const jours = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const heures = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const secondes = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = jours < 10 ? "0" + jours : jours;
+            document.getElementById("hours").innerHTML = heures < 10 ? "0" + heures : heures;
+            document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerHTML = secondes < 10 ? "0" + secondes : secondes;
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").style.display = "none";
+                document.getElementById("message").style.display = "block";
+                document.querySelector(".subtitle").style.display = "none";
+            }
+        }, 1000);
+    </script>
+
 </body>
 </html>
